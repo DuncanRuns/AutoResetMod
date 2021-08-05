@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "autoreset",
+  "version": "${version}",
+  "name": "Auto Reset Mod",
+  "description": "yooo",
+  "authors": [
+    "DuncanRuns"
+  ],
+  "contributors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/autoreset/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.duncanruns.autoreset.AutoReset"
+    ],
+    "client": [],
+    "server": []
+  },
+  "mixins": [
+    "autoreset.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "me.duncanruns.autoreset.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "CreateWorldScreenMixin",
+    "OptionsScreenMixin",
+    "TitleScreenMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
