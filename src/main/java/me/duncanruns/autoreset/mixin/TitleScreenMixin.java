@@ -5,8 +5,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,21 +24,25 @@ public abstract class TitleScreenMixin extends Screen {
     private void initMixin(CallbackInfo info) {
         // If auto reset mode is on, instantly switch to create world menu.
         if (AutoReset.isPlaying) {
-            client.openScreen(new CreateWorldScreen(this));
-        } else if (!this.client.isDemo()) {
+            if (AutoReset.loopPrevent) {
+                AutoReset.loopPrevent = false;
+            } else {
+                minecraft.openScreen(new CreateWorldScreen(this));
+            }
+        } else if (!this.minecraft.isDemo()) {
             // Add new button for starting auto resets.
             int y = this.height / 4 + 48;
-            this.addButton(new ButtonWidget(this.width / 2 - 124, y, 20, 20, new LiteralText(""), (buttonWidget) -> {
+            this.addButton(new ButtonWidget(this.width / 2 - 124, y, 20, 20, "", (buttonWidget) -> {
                 AutoReset.isPlaying = true;
-                client.openScreen(new CreateWorldScreen(this));
+                minecraft.openScreen(new CreateWorldScreen(this));
             }));
         }
     }
 
     @Inject(method = "render", at = @At("TAIL"))
-    private void goldBootsOverlayMixin(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    private void goldBootsOverlayMixin(int mouseX, int mouseY, float delta, CallbackInfo ci) {
         int y = this.height / 4 + 48;
-        this.client.getTextureManager().bindTexture(GOLD_BOOTS);
-        drawTexture(matrices,(width/2)-122,y+2,0.0F,0.0F,16,16,16,16);
+        this.minecraft.getTextureManager().bindTexture(GOLD_BOOTS);
+        blit((width / 2) - 122, y + 2, 0, 0, 16, 16, 16, 16);
     }
 }
