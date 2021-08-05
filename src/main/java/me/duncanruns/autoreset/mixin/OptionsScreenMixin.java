@@ -1,7 +1,6 @@
 package me.duncanruns.autoreset.mixin;
 
 import me.duncanruns.autoreset.AutoReset;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.SaveLevelScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
@@ -28,11 +27,11 @@ public abstract class OptionsScreenMixin extends Screen {
 
             // Get menu.stop_resets text or set to default
             Text text;
-            if(Language.getInstance().get("menu.stop_resets").equals("menu.stop_resets")){
+            if (Language.getInstance().get("menu.stop_resets").equals("menu.stop_resets")) {
                 text = new LiteralText("Stop Resets & Quit");
             } else {
                 text = new TranslatableText("menu.stop_resets");
-            };
+            }
 
             //Add button to disable the auto reset and quit
             this.addButton(new ButtonWidget(0, this.height - 20, 100, 20, text, (buttonWidget) -> {

@@ -24,9 +24,11 @@ public abstract class TitleScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void initMixin(CallbackInfo info) {
+        // If auto reset mode is on, instantly switch to create world menu.
         if (AutoReset.isPlaying) {
             client.openScreen(new CreateWorldScreen(this));
         } else if (!this.client.isDemo()) {
+            // Add new button for starting auto resets.
             int y = this.height / 4 + 48;
             this.addButton(new ButtonWidget(this.width / 2 - 124, y, 20, 20, new LiteralText(""), (buttonWidget) -> {
                 AutoReset.isPlaying = true;
