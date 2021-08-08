@@ -1,6 +1,3 @@
-# AutoResetMod
-Adds a mode where it automatically resets the world after quitting.
-
 ## Usage
 
 Press the golden boots button on the main menu to start the world resetting mode.
@@ -16,3 +13,11 @@ This mod is valid for speedruns on http://speedrun.com/mc and its category exten
 For 1.16.1, Closet Witch's Fast Reset mod is compatible (https://github.com/jan-leila/FastReset/releases).
 
 Note for resource pack creators: the "Stop Resets & Quit" button can be changed by customizing menu.stop_resets in your language file if you like.
+
+## Changelog
+
+### v1.1.0
+- Added World Counters (.minecraft/attempts.txt to change)
+
+### v1.0.2
+- Basic Functionality
