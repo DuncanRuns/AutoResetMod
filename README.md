@@ -9,7 +9,7 @@ To reset, simply leave the world (either the normal save and quit or the fast re
 
 To exit the resetting mode, press the "Stop Resets & Quit" button at the bottom left of the options menu.
 
-## Info
+## Info and Compatibility
 
 This mod is valid for speedruns on http://speedrun.com/mc and its category extensions.
 
