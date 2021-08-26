@@ -15,6 +15,7 @@ public class AutoReset implements ModInitializer {
     public static final String MOD_NAME = "Auto Reset Mod";
     public static boolean isPlaying = false;
     public static Logger LOGGER = LogManager.getLogger();
+    public static int difficulty = 1;
 
     public static void log(Level level, String message) {
         LOGGER.log(level, "[" + MOD_NAME + "] " + message);
@@ -46,9 +47,41 @@ public class AutoReset implements ModInitializer {
         }
     }
 
+    public static void saveDifficulty() {
+        try {
+            File file = new File("ardifficulty.txt");
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(String.valueOf(difficulty));
+            fileWriter.close();
+        } catch (Exception exception) {
+            log(Level.ERROR, "Could not save difficulty for Auto Reset:\n" + exception.getMessage());
+        }
+    }
+
+    public static void loadDifficulty() {
+        try {
+            File file = new File("ardifficulty.txt");
+            Scanner scanner = new Scanner(file);
+            String line = scanner.nextLine();
+            scanner.close();
+            difficulty = Integer.parseInt(line.trim());
+            if(difficulty > 4){
+                difficulty = 1;
+            }
+        } catch (Exception exception) {
+            log(Level.ERROR, "Could not load difficulty for Auto Reset:\n" + exception.getMessage());
+        }
+    }
+
     @Override
     public void onInitialize() {
         log(Level.INFO, "Initializing");
+        File difficultyFile = new File("ardifficulty.txt");
+        if (!difficultyFile.exists()) {
+            saveDifficulty();
+        } else {
+            loadDifficulty();
+        }
     }
 
 }
