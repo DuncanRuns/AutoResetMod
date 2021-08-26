@@ -21,7 +21,6 @@ public abstract class TitleScreenMixin extends Screen {
     private static final Identifier GOLD_BOOTS = new Identifier("textures/item/golden_boots.png");
     private ButtonWidget resetsButton;
     private Text difficultyString;
-    private Random random;
 
     protected TitleScreenMixin(Text title) {
         super(title);
@@ -51,7 +50,6 @@ public abstract class TitleScreenMixin extends Screen {
         }
 
         refreshDifficultyString();
-        random = new Random();
     }
 
     private void refreshDifficultyString() {
