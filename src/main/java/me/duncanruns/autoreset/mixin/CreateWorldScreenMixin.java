@@ -14,6 +14,8 @@ public abstract class CreateWorldScreenMixin {
 
     @Shadow
     private TextFieldWidget levelNameField;
+    @Shadow
+    private boolean hardcore;
 
     @Shadow
     protected abstract void createLevel();
@@ -22,6 +24,9 @@ public abstract class CreateWorldScreenMixin {
     private void autoStartMixin(CallbackInfo info) {
         // If auto reset mode is on, set difficulty to easy and instantly create world.
         if (AutoReset.isPlaying) {
+            if (AutoReset.isHardcore) {
+                hardcore = true;
+            }
             AutoReset.loopPrevent = true;
             levelNameField.setText("Speedrun #" + AutoReset.getNextAttempt());
             createLevel();

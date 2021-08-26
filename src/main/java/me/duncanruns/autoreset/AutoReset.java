@@ -16,6 +16,7 @@ public class AutoReset implements ModInitializer {
     public static boolean isPlaying = false;
     public static boolean loopPrevent = false;
     public static Logger LOGGER = LogManager.getLogger();
+    public static boolean isHardcore = false;
 
     public static void log(Level level, String message) {
         LOGGER.log(level, "[" + MOD_NAME + "] " + message);
@@ -47,8 +48,38 @@ public class AutoReset implements ModInitializer {
         }
     }
 
+    public static void saveDifficulty() {
+        try {
+            File file = new File("arhardcore.txt");
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(String.valueOf(isHardcore ? 1 : 0));
+            fileWriter.close();
+        } catch (Exception exception) {
+            log(Level.ERROR, "Could not save difficulty for Auto Reset:\n" + exception.getMessage());
+        }
+    }
+
+    public static void loadDifficulty() {
+        try {
+            File file = new File("arhardcore.txt");
+            Scanner scanner = new Scanner(file);
+            String line = scanner.nextLine();
+            scanner.close();
+            isHardcore = Integer.parseInt(line.trim()) != 0;
+        } catch (Exception exception) {
+            log(Level.ERROR, "Could not load difficulty for Auto Reset:\n" + exception.getMessage());
+        }
+    }
+
     @Override
     public void onInitialize() {
         log(Level.INFO, "Initializing");
+
+        File difficultyFile = new File("arhardcore.txt");
+        if (!difficultyFile.exists()) {
+            saveDifficulty();
+        } else {
+            loadDifficulty();
+        }
     }
 }

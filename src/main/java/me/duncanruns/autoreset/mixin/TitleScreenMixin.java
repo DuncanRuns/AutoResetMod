@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
     private static final Identifier GOLD_BOOTS = new Identifier("textures/item/golden_boots.png");
+    private ButtonWidget resetsButton;
+    private String difficultyString;
 
     protected TitleScreenMixin(Text title) {
         super(title);
@@ -32,11 +34,22 @@ public abstract class TitleScreenMixin extends Screen {
         } else if (!this.minecraft.isDemo()) {
             // Add new button for starting auto resets.
             int y = this.height / 4 + 48;
-            this.addButton(new ButtonWidget(this.width / 2 - 124, y, 20, 20, "", (buttonWidget) -> {
-                AutoReset.isPlaying = true;
-                minecraft.openScreen(new CreateWorldScreen(this));
+            resetsButton = this.addButton(new ButtonWidget(this.width / 2 - 124, y, 20, 20, "", (buttonWidget) -> {
+                if (!hasShiftDown()) {
+                    AutoReset.isPlaying = true;
+                    AutoReset.saveDifficulty();
+                    minecraft.openScreen(new CreateWorldScreen(this));
+                } else {
+                    AutoReset.isHardcore = !AutoReset.isHardcore;
+                    refreshDifficultyString();
+                }
             }));
         }
+        refreshDifficultyString();
+    }
+
+    private void refreshDifficultyString() {
+        difficultyString = AutoReset.isHardcore ? "Hardcore: ON" : "Hardcore: OFF";
     }
 
     @Inject(method = "render", at = @At("TAIL"))
@@ -44,5 +57,10 @@ public abstract class TitleScreenMixin extends Screen {
         int y = this.height / 4 + 48;
         this.minecraft.getTextureManager().bindTexture(GOLD_BOOTS);
         blit((width / 2) - 122, y + 2, 0, 0, 16, 16, 16, 16);
+        if (resetsButton.isHovered() && hasShiftDown()) {
+            drawCenteredString(minecraft.textRenderer, difficultyString, this.width / 2 - 114, this.height / 4 + 35, 16777215);
+        }
+
+
     }
 }
