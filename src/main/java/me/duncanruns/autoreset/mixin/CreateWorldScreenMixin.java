@@ -18,10 +18,15 @@ public abstract class CreateWorldScreenMixin {
     @Shadow
     protected abstract void createLevel();
 
+    @Shadow private boolean field_3178;
+
     @Inject(method = "init", at = @At("TAIL"))
     private void autoStartMixin(CallbackInfo info) {
         // If auto reset mode is on, set difficulty to easy and instantly create world.
         if (AutoReset.isPlaying) {
+            if (AutoReset.isHardcore) {
+                field_3178 = true;
+            }
             AutoReset.loopPrevent = true;
             levelNameField.setText("Speedrun #" + AutoReset.getNextAttempt());
             createLevel();
