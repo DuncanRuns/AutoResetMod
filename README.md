@@ -1,3 +1,6 @@
+## NOTICE
+This mod is not valid for submissions on https://speedrun.com/mc.
+
 ## Usage
 
 Press the golden boots button on the main menu to start the world resetting mode.

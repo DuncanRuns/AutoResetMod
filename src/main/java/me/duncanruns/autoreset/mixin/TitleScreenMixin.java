@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
-    private static final Identifier GOLD_BOOTS = new Identifier("textures/item/golden_boots.png");
+    private static final Identifier IRON_BOOTS = new Identifier("textures/item/iron_boots.png");
 
     protected TitleScreenMixin(Text title) {
         super(title);
@@ -41,7 +41,7 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "render", at = @At("TAIL"))
     private void goldBootsOverlayMixin(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         int y = this.height / 4 + 48;
-        RenderSystem.setShaderTexture(0, GOLD_BOOTS);
+        RenderSystem.setShaderTexture(0, IRON_BOOTS);
         drawTexture(matrices,(width/2)-122,y+2,0.0F,0.0F,16,16,16,16);
     }
 }

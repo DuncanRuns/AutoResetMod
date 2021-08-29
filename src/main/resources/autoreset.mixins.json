@@ -3,7 +3,9 @@
   "package": "me.duncanruns.autoreset.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "LevelLoadingScreenMixin",
     "CreateWorldScreenMixin",
+    "MoreOptionsDialogMixin",
     "OptionsScreenMixin",
     "TitleScreenMixin"
   ],
