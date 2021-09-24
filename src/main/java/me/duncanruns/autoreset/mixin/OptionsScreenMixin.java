@@ -4,7 +4,7 @@ import me.duncanruns.autoreset.AutoReset;
 import net.minecraft.client.gui.screen.SaveLevelScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.gui.screen.options.OptionsScreen;
+import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -34,12 +34,12 @@ public abstract class OptionsScreenMixin extends Screen {
             }
 
             //Add button to disable the auto reset and quit
-            this.addButton(new ButtonWidget(0, this.height - 20, 100, 20, text, (buttonWidget) -> {
+            this.addDrawableChild(new ButtonWidget(0, this.height - 20, 100, 20, text, (buttonWidget) -> {
                 AutoReset.isPlaying = false;
                 buttonWidget.active = false;
                 this.client.world.disconnect();
                 this.client.disconnect(new SaveLevelScreen(new TranslatableText("menu.savingLevel")));
-                this.client.openScreen(new TitleScreen());
+                this.client.setScreen(new TitleScreen());
             }));
         }
     }

@@ -1,5 +1,6 @@
 package me.duncanruns.autoreset.mixin;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import me.duncanruns.autoreset.AutoReset;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
@@ -30,15 +31,15 @@ public abstract class TitleScreenMixin extends Screen {
     private void initMixin(CallbackInfo info) {
         // If auto reset mode is on, instantly switch to create world menu.
         if (AutoReset.isPlaying) {
-            client.openScreen(new CreateWorldScreen(this));
+            client.setScreen(CreateWorldScreen.create(this));
         } else if (!this.client.isDemo()) {
             // Add new button for starting auto resets.
             int y = this.height / 4 + 48;
-            resetsButton = this.addButton(new ButtonWidget(this.width / 2 - 124, y, 20, 20, new LiteralText(""), (buttonWidget) -> {
+            resetsButton = this.addDrawableChild(new ButtonWidget(this.width / 2 - 124, y, 20, 20, new LiteralText(""), (buttonWidget) -> {
                 if (!hasShiftDown()) {
                     AutoReset.isPlaying = true;
                     AutoReset.saveDifficulty();
-                    client.openScreen(new CreateWorldScreen(this));
+                    client.setScreen(CreateWorldScreen.create(this));
                 } else {
                     AutoReset.difficulty++;
                     if (AutoReset.difficulty > 4) {
@@ -75,7 +76,7 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "render", at = @At("TAIL"))
     private void goldBootsOverlayMixin(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         int y = this.height / 4 + 48;
-        this.client.getTextureManager().bindTexture(GOLD_BOOTS);
+        RenderSystem.setShaderTexture(0,GOLD_BOOTS);
         drawTexture(matrices, (width / 2) - 122, y + 2, 0.0F, 0.0F, 16, 16, 16, 16);
         if (resetsButton.isHovered() && hasShiftDown()) {
             drawCenteredText(matrices, textRenderer, difficultyString, this.width / 2 - 114, this.height / 4 + 35, 16777215);

@@ -15,11 +15,9 @@ public abstract class CreateWorldScreenMixin {
     @Shadow
     public boolean hardcore;
     @Shadow
-    private Difficulty field_24289;
-    @Shadow
-    private Difficulty field_24290;
-    @Shadow
     private TextFieldWidget levelNameField;
+    @Shadow
+    private Difficulty currentDifficulty;
 
     @Shadow
     protected abstract void createLevel();
@@ -50,8 +48,7 @@ public abstract class CreateWorldScreenMixin {
             }
 
             assert difficulty != null;
-            field_24289 = difficulty;
-            field_24290 = difficulty;
+            currentDifficulty = difficulty;
             levelNameField.setText("Speedrun #" + AutoReset.getNextAttempt());
             createLevel();
         }
