@@ -30,7 +30,7 @@ public abstract class TitleScreenMixin extends Screen {
     private void initMixin(CallbackInfo info) {
         // If auto reset mode is on, instantly switch to create world menu.
         if (AutoReset.isPlaying) {
-            client.openScreen(new CreateWorldScreen(this));
+            client.openScreen(CreateWorldScreen.create(this));
         } else if (!this.client.isDemo()) {
             // Add new button for starting auto resets.
             int y = this.height / 4 + 48;
@@ -38,7 +38,7 @@ public abstract class TitleScreenMixin extends Screen {
                 if (!hasShiftDown()) {
                     AutoReset.isPlaying = true;
                     AutoReset.saveDifficulty();
-                    client.openScreen(new CreateWorldScreen(this));
+                    client.openScreen(CreateWorldScreen.create(this));
                 } else {
                     AutoReset.difficulty++;
                     if (AutoReset.difficulty > 4) {
