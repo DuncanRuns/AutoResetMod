@@ -6,7 +6,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SettingsScreen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Language;
@@ -35,9 +34,9 @@ public abstract class SettingsScreenMixin extends Screen {
             this.addButton(new ButtonWidget(0, this.height - 20, 100, 20, text, (buttonWidget) -> {
                 AutoReset.isPlaying = false;
                 buttonWidget.active = false;
-                this.minecraft.world.disconnect();
-                this.minecraft.disconnect(new SaveLevelScreen(new TranslatableText("menu.savingLevel")));
-                this.minecraft.openScreen(new TitleScreen());
+                this.client.world.disconnect();
+                this.client.disconnect(new SaveLevelScreen(new TranslatableText("menu.savingLevel")));
+                this.client.openScreen(new TitleScreen());
             }));
         }
     }

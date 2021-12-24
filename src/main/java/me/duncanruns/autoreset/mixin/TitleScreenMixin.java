@@ -29,16 +29,16 @@ public abstract class TitleScreenMixin extends Screen {
             if (AutoReset.loopPrevent) {
                 AutoReset.loopPrevent = false;
             } else {
-                minecraft.openScreen(new CreateWorldScreen(this));
+                client.openScreen(new CreateWorldScreen(this));
             }
-        } else if (!this.minecraft.isDemo()) {
+        } else if (!this.client.isDemo()) {
             // Add new button for starting auto resets.
             int y = this.height / 4 + 48;
             resetsButton = this.addButton(new ButtonWidget(this.width / 2 - 124, y, 20, 20, "", (buttonWidget) -> {
                 if (!hasShiftDown()) {
                     AutoReset.isPlaying = true;
                     AutoReset.saveDifficulty();
-                    minecraft.openScreen(new CreateWorldScreen(this));
+                    client.openScreen(new CreateWorldScreen(this));
                 } else {
                     AutoReset.isHardcore = !AutoReset.isHardcore;
                     refreshDifficultyString();
@@ -55,10 +55,10 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "render", at = @At("TAIL"))
     private void goldBootsOverlayMixin(int mouseX, int mouseY, float delta, CallbackInfo ci) {
         int y = this.height / 4 + 48;
-        this.minecraft.getTextureManager().bindTexture(GOLD_BOOTS);
-        blit((width / 2) - 122, y + 2, 0, 0, 16, 16, 16, 16);
+        this.client.getTextureManager().bindTexture(GOLD_BOOTS);
+        drawTexture((width / 2) - 122, y + 2, 0, 0, 16, 16, 16, 16);
         if (resetsButton.isHovered() && hasShiftDown()) {
-            drawCenteredString(minecraft.textRenderer, difficultyString, this.width / 2 - 114, this.height / 4 + 35, 16777215);
+            drawCenteredString(client.textRenderer, difficultyString, this.width / 2 - 114, this.height / 4 + 35, 16777215);
         }
 
 
