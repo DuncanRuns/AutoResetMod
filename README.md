@@ -8,7 +8,7 @@ To exit the resetting mode, press the "Stop Resets & Quit" button at the bottom 
 
 ## Info and Compatibility
 
-This mod is valid for speedruns on http://speedrun.com/mc and its category extensions.
+~~This mod is valid for speedruns on http://speedrun.com/mc and its category extensions.~~
 
 For 1.16.1, Closet Witch's Fast Reset mod is compatible (https://github.com/jan-leila/FastReset/releases).
 
